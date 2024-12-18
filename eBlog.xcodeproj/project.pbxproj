@@ -29,20 +29,23 @@
 		0429C0362D13365400A6A86F /* eBlogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eBlogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		04F954622D133C55002885E3 /* Exceptions for "eBlog" folder in "eBlog" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				IOS/Resources/Info.plist,
+			);
+			target = 0429C01B2D13365300A6A86F /* eBlog */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0429C01E2D13365300A6A86F /* eBlog */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				04F954622D133C55002885E3 /* Exceptions for "eBlog" folder in "eBlog" target */,
+			);
 			path = eBlog;
-			sourceTree = "<group>";
-		};
-		0429C02F2D13365400A6A86F /* eBlogTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = eBlogTests;
-			sourceTree = "<group>";
-		};
-		0429C0392D13365400A6A86F /* eBlogUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = eBlogUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,8 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				0429C01E2D13365300A6A86F /* eBlog */,
-				0429C02F2D13365400A6A86F /* eBlogTests */,
-				0429C0392D13365400A6A86F /* eBlogUITests */,
 				0429C01D2D13365300A6A86F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +131,6 @@
 			dependencies = (
 				0429C02E2D13365400A6A86F /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				0429C02F2D13365400A6A86F /* eBlogTests */,
-			);
 			name = eBlogTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +150,6 @@
 			);
 			dependencies = (
 				0429C0382D13365400A6A86F /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				0429C0392D13365400A6A86F /* eBlogUITests */,
 			);
 			name = eBlogUITests;
 			packageProductDependencies = (
@@ -395,10 +390,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"eBlog/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"eBlog/IOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = K8ME5QH9G9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = eBlog/IOS/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -424,10 +420,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"eBlog/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"eBlog/IOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = K8ME5QH9G9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = eBlog/IOS/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
