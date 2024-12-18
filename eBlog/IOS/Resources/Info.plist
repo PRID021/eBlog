@@ -4,7 +4,11 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string></string>
+		<string>FiraCode-Regular.ttf</string>
+		<string>FiraCode-Bold.ttf</string>
+		<string>FiraCode-Medium.ttf</string>
+		<string>FiraCode-SemiBold.ttf</string>
+		<string>FiraCode-Light.ttf</string>
 	</array>
 </dict>
 </plist>
