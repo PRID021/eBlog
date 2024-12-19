@@ -6,15 +6,12 @@ class LoginViewModel: ObservableObject {
     @Published var password: String = "Password123@@"
     @Published var isLoginFailed: Bool = false
     @Published var isLoading: Bool = false
+    @Published var isLoginSuccess: Bool = false
 
-    
     private var loginService: AuthRepository
-    
-    private var coordinator: any AppCoordinatorProtocol
-    
-    init( coordinator: any AppCoordinatorProtocol,loginService: AuthRepository = AuthRepository()) {
-        self.loginService = loginService
-        self.coordinator = coordinator
+
+    init(loginService: AuthRepository = AuthRepository()){
+        self.loginService = loginService;
     }
 
     // Handle login action
@@ -32,7 +29,7 @@ class LoginViewModel: ObservableObject {
                 switch result {
                 case .success( _):
                     self?.isLoginFailed = false
-                    self?.coordinator.setRoot(Screen.home)
+                    self?.isLoginSuccess = true
                     // Handle successful login, e.g., navigate to a new screen
                     
                 case .failure(let error):

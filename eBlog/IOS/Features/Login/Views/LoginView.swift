@@ -19,7 +19,7 @@ struct LoginView: View {
 
     var body: some View {
         if isActive {
-            LoginViewContent(appCoordinator: appCoordinator)
+            LoginViewContent()
 
         } else {
             ZStack {

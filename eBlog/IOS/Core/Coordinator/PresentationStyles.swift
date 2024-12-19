@@ -10,6 +10,7 @@ import Foundation
 enum Screen: Identifiable, Hashable {
     case home
     case login
+    case postDetail(post: Post)
     
     var id: Self { return self }
 }

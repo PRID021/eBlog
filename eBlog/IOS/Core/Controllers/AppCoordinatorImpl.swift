@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 
 class AppCoordinatorImpl: AppCoordinatorProtocol {
+    @Published var root: Screen = .login // Initial root
     @Published var path: NavigationPath = NavigationPath()
-    @Published var root: Screen = .login;
     @Published var sheet: Sheet?
     @Published var fullScreenCover: FullScreenCover?
+
     
     // MARK: - Navigation Functions
     func push(_ screen: Screen) {
@@ -28,8 +29,10 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
     }
     
     func setRoot(_ screen: Screen){
+        
+        print("=====> 33")
+        print(self.root)
         self.root = screen;
-        self.path = NavigationPath();
     }
     
     func presentSheet(_ sheet: Sheet) {
@@ -64,6 +67,8 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             MainView()
         case .login:
             LoginView()
+        case .postDetail(post: let post):
+            PostDetailView(post: post)
         }
     }
     

@@ -3,11 +3,9 @@ import SwiftUI
 struct LoginViewContent: View {
   
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
-    @StateObject private var viewModel: LoginViewModel // Use StateObject without initialization here
-    
-    init(appCoordinator: AppCoordinatorImpl) {
-        // Initialize the viewModel with the coordinator passed into the constructor
-        _viewModel = StateObject(wrappedValue: LoginViewModel(coordinator: appCoordinator))
+    @StateObject private var viewModel: LoginViewModel
+    init() {
+        _viewModel = StateObject(wrappedValue: LoginViewModel())
     }
 
     var body: some View {
@@ -79,11 +77,16 @@ struct LoginViewContent: View {
 
             Spacer()
         }
+        .onChange(of: viewModel.isLoginSuccess) { _, isSuccess in
+            if isSuccess {
+                appCoordinator.setRoot(.home)  // Navigate to the home screen
+            }
+        }
         .background(Color.black)
         .edgesIgnoringSafeArea(.all)
     }
 }
 
 #Preview {
-    LoginViewContent(appCoordinator: AppCoordinatorImpl()) // Make sure to pass the coordinator here
+    LoginViewContent()
 }
