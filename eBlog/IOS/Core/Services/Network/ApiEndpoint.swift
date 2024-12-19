@@ -24,3 +24,9 @@ struct AuthAPIEndpoint : APIEndpoint {
 }
 
 
+struct PostApiEndpoint: APIEndpoint {
+    static var baseURL: String {
+        return "\(scheme)://\(domainUrl)"
+    }
+    var path: String = ""
+}

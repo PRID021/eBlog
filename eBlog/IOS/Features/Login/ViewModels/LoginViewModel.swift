@@ -10,7 +10,7 @@ class LoginViewModel: ObservableObject {
     
     private var loginService: AuthRepository
     
-    private var coordinator: any AppCoordinatorProtocol // Add coordinator reference
+    private var coordinator: any AppCoordinatorProtocol
     
     init( coordinator: any AppCoordinatorProtocol,loginService: AuthRepository = AuthRepository()) {
         self.loginService = loginService
