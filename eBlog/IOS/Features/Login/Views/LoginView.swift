@@ -11,14 +11,16 @@ import SwiftUI
 
 import SwiftUI
 
-struct SplashScreenView: View {
+struct LoginView: View {
+    @EnvironmentObject var appCoordinator: AppCoordinatorImpl
     @State private var isActive = false
     @State private var activeIndex = 0 // Tracks the active character index
     let text = "eBlog" // The text to animate
 
     var body: some View {
         if isActive {
-            ContentView() // Replace with your main view
+            LoginViewContent(appCoordinator: appCoordinator)
+
         } else {
             ZStack {
                 Color.black
@@ -61,5 +63,5 @@ struct SplashScreenView: View {
 }
 
 #Preview {
-    SplashScreenView()
+    LoginView()
 }

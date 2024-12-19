@@ -11,7 +11,12 @@ import SwiftUI
 struct eBlogApp: App {
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            CoordinatorView()
         }
     }
+}
+
+
+#Preview {
+    CoordinatorView()
 }

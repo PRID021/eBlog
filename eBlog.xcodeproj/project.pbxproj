@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		04D749D42D13CC1800004BBE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04D749D32D13CC1800004BBE /* Alamofire */; };
+		04D749DF2D13DA4B00004BBE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 04D749DE2D13DA4B00004BBE /* KeychainSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		0429C02D2D13365400A6A86F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -55,6 +60,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D749DF2D13DA4B00004BBE /* KeychainSwift in Frameworks */,
+				04D749D42D13CC1800004BBE /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +120,8 @@
 			);
 			name = eBlog;
 			packageProductDependencies = (
+				04D749D32D13CC1800004BBE /* Alamofire */,
+				04D749DE2D13DA4B00004BBE /* KeychainSwift */,
 			);
 			productName = eBlog;
 			productReference = 0429C01C2D13365300A6A86F /* eBlog.app */;
@@ -190,6 +199,10 @@
 			);
 			mainGroup = 0429C0132D13365300A6A86F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				04D749D22D13CC1800004BBE /* XCRemoteSwiftPackageReference "Alamofire" */,
+				04D749DD2D13DA4B00004BBE /* XCRemoteSwiftPackageReference "keychain-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0429C01D2D13365300A6A86F /* Products */;
 			projectDirPath = "";
@@ -388,6 +401,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = eBlog/IOS/Resources/eBlog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"eBlog/IOS/Resources/Preview Content\"";
@@ -422,6 +436,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = eBlog/IOS/Resources/eBlog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"eBlog/IOS/Resources/Preview Content\"";
@@ -563,6 +578,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04D749D22D13CC1800004BBE /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		04D749DD2D13DA4B00004BBE /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04D749D32D13CC1800004BBE /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D749D22D13CC1800004BBE /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		04D749DE2D13DA4B00004BBE /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04D749DD2D13DA4B00004BBE /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0429C0142D13365300A6A86F /* Project object */;
 }
