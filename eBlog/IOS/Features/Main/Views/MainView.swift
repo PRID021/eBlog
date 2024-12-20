@@ -4,53 +4,50 @@ struct MainView: View {
     
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
     @StateObject private var viewModel: MainViewModel
+    @State private var selectedTab = 0  // Track the selected tab
     
     init() {
         _viewModel = StateObject(wrappedValue: MainViewModel())
+        UITabBar.appearance().unselectedItemTintColor = UIColor.gray
     }
     
     var body: some View {
-        ZStack {
-            // Apply the background color to the entire screen
-            Color.background
-                .edgesIgnoringSafeArea(.all) // Ensures the background spans the entire screen, including status bar
+        VStack(alignment: .leading, spacing: 0) {
             
-            VStack {
-                Spacer()
-                
-                if !viewModel.posts.isEmpty {
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            ForEach(viewModel.posts, id: \.id) { post in
-                                PostCardPreview(post: post) {
-                                    appCoordinator.push(.postDetail(post: post))
-                                }
-                            }
-                        }
+            Text(selectedTab == 0 ? "For You" : "Future")
+                .font(FontManager.customFont(.semiBold, size: 18))
+                .foregroundColor(.white)
+                .padding()
+                .frame(height:36)
+            
+            TabView(selection: $selectedTab) {
+                // First tab: ForYouTabView
+                ForYouTabView()
+                    .tabItem {
+                        Label("Current", systemImage: "house.fill")
+
+                    }
+                    .tag(0)
+
+                ZStack {
+                    Color.gray.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                    VStack {
+                        Text("Future Development")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .padding()
                     }
                 }
-                
-                // Error message
-                if viewModel.isGetFailed {
-                    Text("Invalid username or password.")
-                        .errorTextModifier()  // Apply the custom error text modifier
+                .tabItem {
+                    Label("Future", systemImage: "ellipsis.circle.fill")
                 }
-                
-                // Loading state
-                if viewModel.isLoading {
-                    ProgressView("Loading in...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .padding(.top, 10)
-                }
-
-                Spacer()
+                .tag(1)
             }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity) // Make the VStack take full screen size
-            .onAppear {
-                viewModel.handleGetPosts()
-            }
+            .accentColor(.green) // This makes the selected tab icon color white
         }
+        .background(Color.cardBackground) // Custom background color
+        .padding(0) // Remove default padding
     }
 }
 
