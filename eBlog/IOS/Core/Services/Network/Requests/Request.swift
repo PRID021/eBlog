@@ -62,13 +62,27 @@ extension Request {
             .validate() // Validate the response
             .responseDecodable(of: APIResponse<ReturnType>.self) { response in
                 NetworkLogger.logResponse(response: response, request: self)
-                
                 switch response.result {
                 case .success(let decodedResponse):
                     // Pass the decoded `data` to the completion handler
                     completion(.success(decodedResponse.data))
                 case .failure(let error):
-                    completion(.failure(error))
+                    var errorMessage = error.localizedDescription
+
+                     if let data = response.data {
+                         do {
+                             if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any],
+                                let message = jsonResponse["message"] as? String,
+                                let statusCode = jsonResponse["statusCode"] as? Int {
+                                 errorMessage = "[\(statusCode)] \(message)" // Custom error message
+                             }
+                         } catch {
+                             print("Failed to parse error response: \(error.localizedDescription)")
+                         }
+                     }
+                     // Pass a custom error with the new message
+                     let customError = NSError(domain: "APIError", code: -1, userInfo: [NSLocalizedDescriptionKey: errorMessage])
+                     completion(.failure(AFError.createURLRequestFailed(error: customError)))
                 }
             }
     }

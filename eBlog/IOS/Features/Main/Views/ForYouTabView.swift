@@ -45,7 +45,7 @@ struct ForYouTabView: View {
             }
 
             if viewModel.isGetFailed {
-                Text("Invalid username or password.")
+                Text("Something wrong happen.")
                     .errorTextModifier()
             }
             

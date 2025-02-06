@@ -3,7 +3,10 @@ import SwiftUI
 struct LoginViewContent: View {
   
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
+    @EnvironmentObject var appViewModel: AppViewModel
+    
     @StateObject private var viewModel: LoginViewModel
+    
     init() {
         _viewModel = StateObject(wrappedValue: LoginViewModel())
     }
@@ -60,13 +63,6 @@ struct LoginViewContent: View {
             .padding(.horizontal)
             .padding(.top, 20)
 
-            // Login Error Message
-            if viewModel.isLoginFailed {
-                Text("Invalid username or password.")
-                    .foregroundColor(.red)
-                    .font(.caption)
-                    .padding(.top, 10)
-            }
             
             // Loading Indicator
             if viewModel.isLoading {
@@ -80,6 +76,11 @@ struct LoginViewContent: View {
         .onChange(of: viewModel.isLoginSuccess) { _, isSuccess in
             if isSuccess {
                 appCoordinator.setRoot(.home)  // Navigate to the home screen
+            }
+        }
+        .onChange(of: viewModel.errorMessage) { _, newError in
+            if let newError = newError {
+                appViewModel.showToastMessage(content: newError)
             }
         }
         .background(Color.black)

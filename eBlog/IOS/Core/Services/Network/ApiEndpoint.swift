@@ -8,7 +8,7 @@
 import Foundation
 
 var scheme: String = "http"
-var domainUrl: String = "192.168.100.43:3000"
+var domainUrl: String = "localhost:3000"
 
 public protocol APIEndpoint {
     static  var baseURL: String { get }

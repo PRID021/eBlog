@@ -13,6 +13,8 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
+
+    
     @State private var isActive = false
     @State private var activeIndex = 0 // Tracks the active character index
     let text = "eBlog" // The text to animate

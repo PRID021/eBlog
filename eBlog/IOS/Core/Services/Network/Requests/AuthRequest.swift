@@ -14,7 +14,7 @@ struct SignInRequest: Request {
     // Initialize with email and password
     init(email: String, password: String) {
         self.body = [
-            "email": email,
+            "user_name": email,
             "password": password
         ]
         self.headers = [

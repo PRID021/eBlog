@@ -1,4 +1,5 @@
 import SwiftUI
+
 import Combine
 
 class LoginViewModel: ObservableObject {
@@ -7,6 +8,7 @@ class LoginViewModel: ObservableObject {
     @Published var isLoginFailed: Bool = false
     @Published var isLoading: Bool = false
     @Published var isLoginSuccess: Bool = false
+    @Published var errorMessage: String? = nil
 
     private var loginService: AuthRepository
 
@@ -23,6 +25,8 @@ class LoginViewModel: ObservableObject {
         
         isLoading = true
         isLoginFailed = false
+        errorMessage = nil
+        
         loginService.authenticate(email: email, password: password) { [weak self] result in
             DispatchQueue.main.async {
                 self?.isLoading = false
@@ -35,7 +39,7 @@ class LoginViewModel: ObservableObject {
                 case .failure(let error):
                     // Handle failure, e.g., show an error message
                     self?.isLoginFailed = true
-                    print("Login failed with error: \(error.localizedDescription)")
+                    self?.errorMessage = error.localizedDescription
                 }
             }
         }

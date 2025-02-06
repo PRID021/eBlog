@@ -11,4 +11,5 @@ struct APIResponse<T: Codable>: Codable {
     let data: T
     let statusCode: Int
     let message: String
+    
 }

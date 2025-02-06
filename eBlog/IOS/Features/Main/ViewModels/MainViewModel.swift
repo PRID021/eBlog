@@ -32,7 +32,7 @@ class MainViewModel : ObservableObject {
                 switch result {
                 case .success(let posts):
                     self?.posts = posts
-                case .failure(let _):
+                case .failure(_):
                     self?.isGetFailed = true
                 }
             }

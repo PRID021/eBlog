@@ -29,9 +29,6 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
     }
     
     func setRoot(_ screen: Screen){
-        
-        print("=====> 33")
-        print(self.root)
         self.root = screen;
     }
     

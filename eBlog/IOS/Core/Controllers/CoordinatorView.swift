@@ -13,6 +13,8 @@ import SwiftUI
 
 struct CoordinatorView: View {
     @StateObject var appCoordinator: AppCoordinatorImpl = AppCoordinatorImpl()
+    @StateObject var appViewModel =  AppViewModel.shared
+    
     var body: some View {
         NavigationStack(path: $appCoordinator.path) {
             appCoordinator.build(appCoordinator.root)
@@ -26,7 +28,9 @@ struct CoordinatorView: View {
                     appCoordinator.build(fullScreenCover)
                 }
         }
+        .toast(message: appViewModel.toastMessage, isShowing: $appViewModel.showToast, duration: Toast.short)
         .environmentObject(appCoordinator)
+        .environmentObject(appViewModel)
     }
 }
 
