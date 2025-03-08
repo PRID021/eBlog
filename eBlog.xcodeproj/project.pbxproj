@@ -77,6 +77,7 @@
 				0429C0182D13365300A6A86F /* Sources */,
 				0429C0192D13365300A6A86F /* Frameworks */,
 				0429C01A2D13365300A6A86F /* Resources */,
+				04BE33522D7C7D1500264420 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -143,6 +144,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04BE33522D7C7D1500264420 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+				"",
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${INFOPLIST_FILE}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "IP=$(ifconfig | grep \"inet \" | grep -v 127.0.0.1 | grep 192.168 | awk '{print $2}')\necho \"IP set to: $IP\"\n/usr/libexec/PlistBuddy -c \"Set :IP $IP\" \"$INFOPLIST_FILE\" 2>/dev/null || /usr/libexec/PlistBuddy -c \"Add :IP string $IP\" \"$INFOPLIST_FILE\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0429C0182D13365300A6A86F /* Sources */ = {
