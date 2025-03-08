@@ -17,10 +17,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		04F954622D133C55002885E3 /* Exceptions for "eBlog" folder in "eBlog" target */ = {
+		04BE33512D7C6A1400264420 /* Exceptions for "eBlog" folder in "eBlog" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				IOS/Resources/Info.plist,
+				Resources/Info.plist,
 			);
 			target = 0429C01B2D13365300A6A86F /* eBlog */;
 		};
@@ -30,7 +30,7 @@
 		0429C01E2D13365300A6A86F /* eBlog */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				04F954622D133C55002885E3 /* Exceptions for "eBlog" folder in "eBlog" target */,
+				04BE33512D7C6A1400264420 /* Exceptions for "eBlog" folder in "eBlog" target */,
 			);
 			path = eBlog;
 			sourceTree = "<group>";
@@ -279,14 +279,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = eBlog/IOS/Resources/eBlog.entitlements;
+				CODE_SIGN_ENTITLEMENTS = eBlog/Resources/eBlog.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"eBlog/IOS/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = K8ME5QH9G9;
+				DEVELOPMENT_ASSET_PATHS = "\"eBlog/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = A6GE7ESY82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = eBlog/IOS/Resources/Info.plist;
+				INFOPLIST_FILE = eBlog/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -297,8 +298,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.executionlab.eBlog;
+				PRODUCT_BUNDLE_IDENTIFIER = com.glamo.research;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -314,14 +316,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = eBlog/IOS/Resources/eBlog.entitlements;
+				CODE_SIGN_ENTITLEMENTS = eBlog/Resources/eBlog.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"eBlog/IOS/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = K8ME5QH9G9;
+				DEVELOPMENT_ASSET_PATHS = "\"eBlog/Resources/Preview Content\"";
+				DEVELOPMENT_TEAM = A6GE7ESY82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = eBlog/IOS/Resources/Info.plist;
+				INFOPLIST_FILE = eBlog/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -332,8 +335,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.executionlab.eBlog;
+				PRODUCT_BUNDLE_IDENTIFIER = com.glamo.research;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
