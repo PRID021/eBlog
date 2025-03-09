@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct FullScreenImageView: View {
-    var imageUrl: String  // The image URL to load
+    var imageUrl: URL  // The image URL to load
     var height: CGFloat   // The height of the image
 
     var body: some View {
-        AsyncImage(url: URL(string: imageUrl)) { phase in
+        AsyncImage(url: imageUrl) { phase in
             switch phase {
             case .empty:
                 ProgressView()
@@ -32,8 +32,8 @@ struct FullScreenImageView: View {
 
 struct ContentView: View {
     var body: some View {
-        FullScreenImageView(imageUrl: "https://picsum.photos/200/300", height: 300)
-            .frame(maxWidth: .infinity)  
+        FullScreenImageView(imageUrl: URL(string: "https://picsum.photos/200/300")!, height: 300)
+            .frame(maxWidth: .infinity)
     }
 }
 

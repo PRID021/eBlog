@@ -50,7 +50,9 @@ struct LoginViewContent: View {
             
             // Login Button
             Button(action: {
-                viewModel.handleLogin()
+                viewModel.handleLogin { result, error in
+                    
+                }
             }) {
                 Text("Login")
                     .font(FontManager.customFont(.medium, size: 18))
@@ -62,16 +64,28 @@ struct LoginViewContent: View {
             }
             .padding(.horizontal)
             .padding(.top, 20)
-
             
-            // Loading Indicator
-            if viewModel.isLoading {
-                ProgressView("Logging in...")
-                    .progressViewStyle(CircularProgressViewStyle())
+            
+            ProgressView("Logging in...")
+                .progressViewStyle(CircularProgressViewStyle()) .opacity(viewModel.isLoading ? 1 : 0)
                     .padding(.top, 10)
-            }
-
             Spacer()
+            
+            Button(action: {
+                viewModel.handleLoginWithFaceId { success, error in
+                    if(success){
+                        print("Logged in successfully")
+                    } else{
+                        print("Error: \(error ?? "Unknown error")")
+                    }
+                }
+            }) {
+                Image(systemName: "faceid")
+                    .font(.largeTitle)
+            }
+            .opacity(viewModel.showFaceIdButton ? 1 : 0)
+            .padding(.bottom,100)
+
         }
         .onChange(of: viewModel.isLoginSuccess) { _, isSuccess in
             if isSuccess {
@@ -85,6 +99,7 @@ struct LoginViewContent: View {
         }
         .background(Color.black)
         .edgesIgnoringSafeArea(.all)
+
     }
 }
 

@@ -41,7 +41,7 @@ struct FeaturingDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     
-                    FullScreenImageView(imageUrl: featuring.imageAlt, height: 300)
+                    FullScreenImageView(imageUrl: featuring.mobileMedia, height: 300)
                         .frame(maxWidth: .infinity)
                     
                     // Markdown Content
