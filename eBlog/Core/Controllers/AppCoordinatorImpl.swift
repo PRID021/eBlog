@@ -62,6 +62,7 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
         switch screen {
         case .home:
             MainView()
+                .onAppear()
         case .login:
             LoginView()
         case .featuringDetail(featuring: let Featuring):

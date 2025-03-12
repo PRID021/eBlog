@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct eBlogApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             CoordinatorView()

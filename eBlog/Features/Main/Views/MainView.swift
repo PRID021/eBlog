@@ -1,10 +1,10 @@
+// MainView.swift
 import SwiftUI
 
 struct MainView: View {
-    
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
     @StateObject private var viewModel: MainViewModel
-    @State private var selectedTab = 0  // Track the selected tab
+    @Environment(\.scenePhase) private var scenePhase
     
     init() {
         _viewModel = StateObject(wrappedValue: MainViewModel())
@@ -13,44 +13,56 @@ struct MainView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            
-            Text(selectedTab == 0 ? "For You" : "Future")
-                .font(FontManager.customFont(.semiBold, size: 18))
+            Text(viewModel.selectedTab == 0 ? "For You" : "Future")
+                .font(FontManager.customFont(.semiBold, size: 18)) // Assuming FontManager exists
                 .foregroundColor(.white)
                 .padding()
-                .frame(height:36)
+                .frame(height: 36)
             
-            TabView(selection: $selectedTab) {
-                // First tab: ForYouTabView
+            TabView(selection: $viewModel.selectedTab) {
                 ForYouTabView()
                     .tabItem {
                         Label("Current", systemImage: "house.fill")
-
                     }
                     .tag(0)
-
-                ZStack {
-                    Color.gray.opacity(0.2)
-                        .edgesIgnoringSafeArea(.all)
-                    VStack {
-                        Text("Future Development")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding()
+                
+                APNView()
+                    .tabItem {
+                        Label("Future", systemImage: "ellipsis.circle.fill")
+                    }
+                    .tag(1)
+            }
+            .accentColor(.green)
+        }
+        .background(Color.cardBackground) // Assuming Color.cardBackground exists
+        .padding(0)
+        .environmentObject(viewModel)
+        .alert(isPresented: $viewModel.showSettingsAlert) {
+            Alert(
+                title: Text("Notifications Disabled"),
+                message: Text("Please go to Settings to enable notifications."),
+                primaryButton: .default(Text("Settings")) {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        .onChange(of: viewModel.selectedTab) {
+                    if viewModel.selectedTab == 1 {
+                        viewModel.requestPermissionIfNeeded()
                     }
                 }
-                .tabItem {
-                    Label("Future", systemImage: "ellipsis.circle.fill")
-                }
-                .tag(1)
+        .onChange(of: scenePhase) {
+            if scenePhase == .active && viewModel.selectedTab == 1 {
+                viewModel.requestPermissionIfNeeded()
             }
-            .accentColor(.green) // This makes the selected tab icon color white
         }
-        .background(Color.cardBackground) // Custom background color
-        .padding(0) // Remove default padding
     }
 }
 
 #Preview {
     MainView()
+        .environmentObject(AppCoordinatorImpl())
 }

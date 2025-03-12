@@ -1,9 +1,9 @@
+// ForYouTabView.swift
 import SwiftUI
 
 struct ForYouTabView: View {
-    
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
-    @StateObject private var viewModel = MainViewModel()
+    @EnvironmentObject var viewModel: MainViewModel
     @State private var scrollOffset: CGFloat = 0
     
     var body: some View {
@@ -35,7 +35,7 @@ struct ForYouTabView: View {
                 .listStyle(PlainListStyle())
                 .background(Color.background)
             }
-
+            
             if viewModel.isGetFailed {
                 Text("Something went wrong.")
                     .errorTextModifier()
@@ -46,7 +46,7 @@ struct ForYouTabView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                     .padding(.top, 10)
             }
-
+            
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -55,4 +55,10 @@ struct ForYouTabView: View {
         }
         .background(Color.cardBackground)
     }
+}
+
+#Preview {
+    ForYouTabView()
+        .environmentObject(AppCoordinatorImpl())
+        .environmentObject(MainViewModel())
 }
