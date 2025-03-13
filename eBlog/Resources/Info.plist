@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string></string>
+	<string>com.glamo.research</string>
 	<key>IP</key>
 	<string>192.168.1.246</string>
 	<key>NSFaceIDUsageDescription</key>
