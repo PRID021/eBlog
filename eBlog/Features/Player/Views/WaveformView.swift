@@ -57,14 +57,12 @@ struct WaveformView: View {
             ctx.stroke(baseline, with: .color(.white.opacity(0)), lineWidth: 0.5)
         }
         .background(Color(red: 0.1, green: 0.1, blue: 0.1))
-        .frame(height: 120)
         .clipped()
+        .onReceive(viewModel.$waveformSamples){ newWaves in
+            self.samples = newWaves
+        }
         .onAppear {
-            viewModel.startMonitoringAudio { newSamples in
-                DispatchQueue.main.async {
-                    self.samples = newSamples
-                }
-            }
+            viewModel.startMonitoringAudio()
         }
         .onDisappear {
             viewModel.stopMonitoringAudio()

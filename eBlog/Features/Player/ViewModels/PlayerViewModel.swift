@@ -27,6 +27,8 @@ class PlayerViewModel: NSObject, ObservableObject {
     private var timer: Timer?
     private var meteringTimer: Timer?
     private var hasCountedPlay = false
+    @Published var waveformSamples: [Float] = []
+
 
     // MARK: - Init
     init(track: Track) {
@@ -51,6 +53,7 @@ extension PlayerViewModel: AVAudioPlayerDelegate {
     func play(song: Song) {
         stop()
         stopMetering()
+        stopMonitoringAudio()
         hasCountedPlay = false
         print("[Player] ▶️ \(song.title)")
 
@@ -72,6 +75,7 @@ extension PlayerViewModel: AVAudioPlayerDelegate {
 
             startProgressTimer()
             startMetering()
+            startMonitoringAudio()
             updateNowPlayingInfo()
         } catch {
             print("[Player] ⚠️ Failed to play \(song.title): \(error.localizedDescription)")
@@ -194,7 +198,7 @@ extension PlayerViewModel {
         meteringTimer = nil
     }
     
-    func startMonitoringAudio(update: @escaping ([Float]) -> Void) {
+    func startMonitoringAudio() {
         guard let player = player else { return }
         player.isMeteringEnabled = true
         
@@ -208,8 +212,7 @@ extension PlayerViewModel {
                 let phase = Float(i) / 10.0
                 return normalized * sin(phase)
             }
-            
-            update(samples)
+            self.waveformSamples = samples
         }
     }
     
