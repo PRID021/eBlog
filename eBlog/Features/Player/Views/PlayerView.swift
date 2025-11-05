@@ -3,7 +3,6 @@ import AVFoundation
 
 struct PlayerView: View {
     @StateObject private var viewModel: PlayerViewModel
-    @State private var scrollOffset: CGFloat = 0
 
     init(track: Track) {
         _viewModel = StateObject(wrappedValue: PlayerViewModel(track: track))
@@ -14,10 +13,7 @@ struct PlayerView: View {
             WaveformView(viewModel: viewModel)
                 .frame(height: 120)
             Spacer()
-            SongListView(
-                viewModel: viewModel,
-                scrollOffset: $scrollOffset
-            )
+            SongListView(viewModel: viewModel)
             .background(Color(red: 0.07, green: 0.07, blue: 0.07).ignoresSafeArea())
             .onDisappear {
                 viewModel.stop()
@@ -52,7 +48,6 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 
 private struct SongListView: View {
     @ObservedObject var viewModel: PlayerViewModel
-    @Binding var scrollOffset: CGFloat
 
     var body: some View {
         ScrollView {
@@ -67,17 +62,6 @@ private struct SongListView: View {
                     }
                 }
             }
-            .background(
-                GeometryReader { proxy in
-                    Color.clear
-                        .onAppear {
-                            scrollOffset = -proxy.frame(in: .named("scroll")).origin.y
-                        }
-                        .onChange(of: proxy.frame(in: .named("scroll")).origin.y) { newValue in
-                            scrollOffset = -newValue
-                        }
-                }
-            )
         }
         .coordinateSpace(name: "scroll")
     }

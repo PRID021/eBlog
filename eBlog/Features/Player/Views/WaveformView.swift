@@ -8,14 +8,6 @@
 import SwiftUI
 import AVFoundation
 import Accelerate
-//
-//  WaveformView.swift
-//  eBlog
-//
-//  Created by mac on 5/11/25.
-//
-
-import SwiftUI
 
 struct WaveformView: View {
     @ObservedObject var viewModel: PlayerViewModel
@@ -25,7 +17,6 @@ struct WaveformView: View {
         Canvas { ctx, size in
             let (wavePath, closedPath) = waveformPaths(size: size)
 
-            // Shared gradient (same for fill AND stroke)
             let gradient = Gradient(colors: [
                 Color.blue.opacity(0.8),
                 Color.purple.opacity(0.8),
@@ -38,34 +29,18 @@ struct WaveformView: View {
                 endPoint: CGPoint(x: size.width, y: 0)
             )
 
-            // 1. Fill the area under the curve
+            // Fill under curve
             ctx.fill(closedPath, with: gradientShader)
 
-            // 2. Stroke the curve with the SAME gradient
-            ctx.stroke(
-                wavePath,
-                with: gradientShader,
-                lineWidth: 3
-            )
-
-            // 3. Optional: subtle baseline (now invisible or very faint)
-            let midY = size.height / 2
-            let baseline = Path { p in
-                p.move(to: CGPoint(x: 0, y: midY))
-                p.addLine(to: CGPoint(x: size.width, y: midY))
-            }
-            ctx.stroke(baseline, with: .color(.white.opacity(0)), lineWidth: 0.5)
+            // Stroke curve
+            ctx.stroke(wavePath, with: gradientShader, lineWidth: 1)
         }
         .background(Color(red: 0.1, green: 0.1, blue: 0.1))
         .clipped()
-        .onReceive(viewModel.$waveformSamples){ newWaves in
-            self.samples = newWaves
-        }
-        .onAppear {
-            viewModel.startMonitoringAudio()
-        }
-        .onDisappear {
-            viewModel.stopMonitoringAudio()
+        .onReceive(viewModel.$waveformSamples) { newSamples in
+            withAnimation(.linear(duration: 0.05)) {
+                self.samples = newSamples
+            }
         }
     }
 
@@ -74,7 +49,7 @@ struct WaveformView: View {
         var closed = Path()
 
         let midY = size.height / 2
-        let step = size.width / CGFloat(samples.count - 1)
+        let step = size.width / CGFloat(max(samples.count - 1, 1))
 
         wave.move(to: CGPoint(x: 0, y: midY))
         closed.move(to: CGPoint(x: 0, y: size.height))
@@ -82,8 +57,7 @@ struct WaveformView: View {
 
         for (i, sample) in samples.enumerated() {
             let x = CGFloat(i) * step
-            let y = midY - CGFloat(sample) * midY * 0.9  // slightly less tall for beauty
-
+            let y = midY - CGFloat(sample) * midY * 0.9
             wave.addLine(to: CGPoint(x: x, y: y))
             closed.addLine(to: CGPoint(x: x, y: y))
         }

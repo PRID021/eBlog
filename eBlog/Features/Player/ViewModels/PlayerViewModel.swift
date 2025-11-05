@@ -173,6 +173,15 @@ extension PlayerViewModel {
 
 
 
+extension Float {
+
+    func normalizedPower() -> Float {
+        let minDb: Float = -60
+        return max(0, (self - minDb) / -minDb)
+    }
+}
+
+
 // MARK: - Metering
 extension PlayerViewModel {
     func startMetering() {
@@ -201,20 +210,24 @@ extension PlayerViewModel {
     func startMonitoringAudio() {
         guard let player = player else { return }
         player.isMeteringEnabled = true
-        
-        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+
+        timer = Timer(timeInterval: 0.05, repeats: true) { _ in
             player.updateMeters()
             let power = player.averagePower(forChannel: 0)
             let normalized = pow(10, power / 20)
             
-            // Generate smooth waveform samples
             let samples = (0..<100).map { i -> Float in
                 let phase = Float(i) / 10.0
                 return normalized * sin(phase)
             }
-            self.waveformSamples = samples
+            DispatchQueue.main.async {
+                self.waveformSamples = samples
+            }
         }
+
+        RunLoop.current.add(timer!, forMode: .common)
     }
+
     
     func stopMonitoringAudio() {
         timer?.invalidate()
