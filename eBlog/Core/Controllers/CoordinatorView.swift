@@ -8,9 +8,6 @@
 
 import SwiftUI
 
-
-import SwiftUI
-
 struct CoordinatorView: View {
     @StateObject var appCoordinator: AppCoordinatorImpl = AppCoordinatorImpl()
     @StateObject var appViewModel =  AppViewModel.shared
@@ -29,6 +26,13 @@ struct CoordinatorView: View {
                 }
         }
         .toast(message: appViewModel.toastMessage, isShowing: $appViewModel.showToast, duration: Toast.short)
+        .alert("Enable Face ID?",
+               isPresented: $appViewModel.showEnableFaceIDPrompt) {
+            Button("Yes") {
+                appViewModel.confirmEnableFaceID(true)
+            }
+            Button("No", role: .cancel) { }
+        }
         .environmentObject(appCoordinator)
         .environmentObject(appViewModel)
     }

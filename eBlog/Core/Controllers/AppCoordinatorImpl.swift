@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class AppCoordinatorImpl: AppCoordinatorProtocol {
-    @Published var root: Screen = .login // Initial root
+    @Published var root: Screen = .library // Initial root
     @Published var path: NavigationPath = NavigationPath()
     @Published var sheet: Sheet?
     @Published var fullScreenCover: FullScreenCover?
@@ -66,6 +66,10 @@ class AppCoordinatorImpl: AppCoordinatorProtocol {
             LoginView()
         case .featuringDetail(featuring: let Featuring):
             FeaturingDetailView(featuring: Featuring)
+        case .library:
+            LibraryView()
+        case .player(let track):
+            PlayerView(track: track)
         }
     }
     

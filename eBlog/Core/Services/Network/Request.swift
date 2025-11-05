@@ -51,7 +51,7 @@ extension Request {
         // Request headers and body (if any)
         var requestHeaders = headers ?? [:]
         requestHeaders["Content-Type"] = contentType
-        
+        var didComplete = false
         NetworkLogger.logRequest(baseURL, self)
         
         AF.request(finalURL,
@@ -60,7 +60,23 @@ extension Request {
                    encoding: JSONEncoding.default,
                    headers: HTTPHeaders(requestHeaders))
             .validate() // Validate the response
+            .responseData { response in
+                if let statusCode = response.response?.statusCode,
+                   (statusCode == 204 || (statusCode == 200 && (response.data == nil || response.data?.isEmpty == true))) {
+                    
+                    NetworkLogger.logResponse(response: response, request: self)
+                    
+                    if let empty = EmptyResponse() as? ReturnType {
+                        didComplete = true
+                        completion(.success(empty))
+                    } else {
+                        didComplete = true
+                        completion(.failure(AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength)))
+                    }
+                }
+            }
             .responseDecodable(of: APIResponse<ReturnType>.self) { response in
+                guard !didComplete else { return }
                 NetworkLogger.logResponse(response: response, request: self)
                 switch response.result {
                 case .success(let decodedResponse):

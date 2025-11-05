@@ -1,5 +1,5 @@
 {
-  "originHash" : "4637aeaaeb4011529d08c42f004dba9baa6ded555530df9c91d0bfdc3314f98a",
+  "originHash" : "3de24faea3f7cf9fa38bdb41b0d0a36c617ce7c2e1d7b54f00352554790ffac9",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
         "version" : "5.10.2"
+      }
+    },
+    {
+      "identity" : "dswaveformimage?tab=readme-ov-file",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dmrschmidt/DSWaveformImage?tab=readme-ov-file",
+      "state" : {
+        "revision" : "4c56578ee10128ee2b2c04c9c5aa73812de722db",
+        "version" : "14.2.2"
       }
     },
     {

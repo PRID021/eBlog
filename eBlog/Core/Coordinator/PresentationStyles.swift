@@ -12,6 +12,10 @@ enum Screen: Identifiable, Hashable {
     case login
     case featuringDetail(featuring: Featuring)
     
+    /// Musing Player
+    case player(track: Track)
+    case library
+
     var id: Self { return self }
 }
 

@@ -1,108 +1,136 @@
 import SwiftUI
 
 struct LoginViewContent: View {
-  
     @EnvironmentObject var appCoordinator: AppCoordinatorImpl
     @EnvironmentObject var appViewModel: AppViewModel
     
-    @StateObject private var viewModel: LoginViewModel
+    @StateObject private var viewModel = LoginViewModel()
+    @State private var isPasswordVisible = false
     
-    init() {
-        _viewModel = StateObject(wrappedValue: LoginViewModel())
-    }
-
     var body: some View {
         VStack {
             Spacer()
             
-            // App Title or Logo
+            // MARK: - App Title
             Text("eBlog")
                 .font(FontManager.customFont(.bold, size: 48))
                 .foregroundColor(.blue)
                 .padding(.bottom, 40)
             
-            // Username Field
-            TextField("Email", text: $viewModel.email)
-                .font(FontManager.customFont(.medium, size: 18))
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                )
-                .padding(.horizontal)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
+            // MARK: - Email Field
+            inputField("Email", text: $viewModel.email)
             
-            // Password Field
-            SecureField("Password", text: $viewModel.password)
-                .font(FontManager.customFont(.medium, size: 18))
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                )
-                .padding(.horizontal)
-                .padding(.top, 10)
+            // MARK: - Password Field
+            passwordField
             
-            // Login Button
-            Button(action: {
-                viewModel.handleLogin { result, error in
-                    
-                }
-            }) {
+            // MARK: - Login Button
+            Button {
+                viewModel.handleLogin { _, _ in }
+            } label: {
                 Text("Login")
                     .font(FontManager.customFont(.medium, size: 18))
                     .foregroundColor(.white)
-                    .padding()
                     .frame(maxWidth: .infinity)
+                    .padding()
                     .background(Color.blue)
                     .cornerRadius(10)
             }
-            .padding(.horizontal)
             .padding(.top, 20)
             
-            
-            ProgressView("Logging in...")
-                .progressViewStyle(CircularProgressViewStyle()) .opacity(viewModel.isLoading ? 1 : 0)
+            // MARK: - Loading Indicator
+            if viewModel.isLoading {
+                ProgressView("Logging in...")
+                    .progressViewStyle(CircularProgressViewStyle())
                     .padding(.top, 10)
+            }
+            
             Spacer()
             
-            Button(action: {
-                viewModel.handleLoginWithFaceId { success, error in
-                    if(success){
-                        print("Logged in successfully")
-                    } else{
-                        print("Error: \(error ?? "Unknown error")")
+            // MARK: - Face ID Button
+            if viewModel.showFaceIdButton {
+                Button {
+                    viewModel.handleLoginWithFaceId { success, error in
+                        if success {
+                            print("Logged in successfully")
+                        } else {
+                            print("Error: \(error ?? "Unknown error")")
+                        }
+                    }
+                } label: {
+                    Image(systemName: "faceid")
+                        .font(.largeTitle)
+                }
+                .padding(.bottom, 100)
+            }
+        }
+        .padding(.horizontal)
+        .background(Color.black.ignoresSafeArea())
+        .onChange(of: viewModel.isLoginSuccess) { _, success in
+            if success {
+                appCoordinator.setRoot(.home)
+                // Trigger Face ID alert globally (non-blocking)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    appViewModel.showEnableFaceIDPrompt(!viewModel.showFaceIdButton) { confirm in
+                        if confirm {
+                            viewModel.saveCredentialsToKeychain()
+                        }
                     }
                 }
-            }) {
-                Image(systemName: "faceid")
-                    .font(.largeTitle)
-            }
-            .opacity(viewModel.showFaceIdButton ? 1 : 0)
-            .padding(.bottom,100)
-
-        }
-        .onChange(of: viewModel.isLoginSuccess) { _, isSuccess in
-            if isSuccess {
-                appCoordinator.setRoot(.home)  // Navigate to the home screen
             }
         }
-        .onChange(of: viewModel.errorMessage) { _, newError in
-            if let newError = newError {
-                appViewModel.showToastMessage(content: newError)
-            }
+        .onChange(of: viewModel.errorMessage) { _, message in
+            if let message { appViewModel.showToastMessage(content: message) }
         }
-        .background(Color.black)
-        .edgesIgnoringSafeArea(.all)
-
     }
 }
 
-#Preview {
-    LoginViewContent()
+// MARK: - Components
+private extension LoginViewContent {
+    func inputField(_ placeholder: String, text: Binding<String>) -> some View {
+        TextField(placeholder, text: text)
+            .font(FontManager.customFont(.medium, size: 18))
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+            )
+    }
+    
+    var passwordField: some View {
+        HStack {
+            Group {
+                if isPasswordVisible {
+                    TextField("Password", text: $viewModel.password)
+                } else {
+                    SecureField("Password", text: $viewModel.password)
+                }
+            }
+            .font(FontManager.customFont(.medium, size: 18))
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+            
+            Button { isPasswordVisible.toggle() } label: {
+                Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
+                    .foregroundColor(.gray)
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+        )
+        .padding(.top, 10)
+    }
 }
+
+//#Preview {
+//    LoginViewContent()
+//        .environmentObject(AppCoordinatorImpl())
+//        .environmentObject(AppViewModel())
+//}
